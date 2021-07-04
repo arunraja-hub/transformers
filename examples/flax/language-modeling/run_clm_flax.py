@@ -609,6 +609,8 @@ def main():
         desc = f"Epoch... ({epoch + 1}/{num_epochs} | Eval Loss: {eval_metrics['loss']} | Eval Perplexity: {eval_metrics['perplexity']})"
         epochs.write(desc)
         epochs.desc = desc
+        
+        print(">>>>>>>>>>>>>>>>>>>>",training_args)
 
         # Save metrics
         if has_tensorboard and jax.process_index() == 0:
@@ -624,6 +626,7 @@ def main():
                 push_to_hub=training_args.push_to_hub,
                 commit_message=f"Saving weights and logs of epoch {epoch+1}",
             )
+       
 
 
 if __name__ == "__main__":
