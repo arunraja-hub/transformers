@@ -253,7 +253,10 @@ def main():
         model_args, data_args, training_args = parser.parse_json_file(json_file=os.path.abspath(sys.argv[1]))
     else:
         model_args, data_args, training_args = parser.parse_args_into_dataclasses()
-
+        
+    #links output dir to home dir
+    training_args.output_dir = (Path.home()/training_args.output_dir).as_posix()
+    
     if (
         os.path.exists(training_args.output_dir)
         and os.listdir(training_args.output_dir)
@@ -610,7 +613,7 @@ def main():
         epochs.write(desc)
         epochs.desc = desc
         
-        print(">>>>>>>>>>>>>>>>>>>>",training_args)
+        # print(">>>>>>>>>>>>>>>>>>>>",training_args)
 
         # Save metrics
         if has_tensorboard and jax.process_index() == 0:
