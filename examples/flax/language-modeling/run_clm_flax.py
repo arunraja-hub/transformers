@@ -366,7 +366,12 @@ def main():
         column_names = dataset["train"].column_names
     else:
         column_names = dataset["validation"].column_names
-    text_column_name = "text" if "text" in column_names else column_names[0]
+    text_column_name = "whole_func_string" if "whole_func_string" in column_names else column_names[0]
+    
+    # these cells should be commented out to run on full dataset
+    dataset["train"] = dataset["train"].select(range(1000))
+    dataset["validation"] = dataset["validation"].select(range(1000))
+
 
     # since this will be pickled to avoid _LazyModule error in Hasher force logger loading before tokenize_function
     tok_logger = transformers.utils.logging.get_logger("transformers.tokenization_utils_base")
